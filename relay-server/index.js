@@ -220,6 +220,7 @@ io.on('connection', socket => {
 
       for (item in session["loot"]) {
         if (session["loot"][item].signature == validatedData.signature) {
+        //if (session["loot"][item].signature == data.signature) {
           removeIndex = item;
           break;
         }
@@ -232,10 +233,9 @@ io.on('connection', socket => {
         for (isocket of sockets) {
           let currentSocket = isocket[1];
           if (!currentSocket["radarData"].isHost) {
-            currentSocket.emit("addloot", session["loot"][removeIndex]);
+            currentSocket.emit("deleteloot", session["loot"][removeIndex]);
           }
         }
-
         session["loot"].splice(removeIndex, 1);
       }
     }

@@ -17,18 +17,17 @@ pkill -9 'node'
 pkill -9 'TarkovInjector'
 
 # Run RELAY server
-echo "Run ${RELAY}"
+echo "Run relay server"
 node ${RELAY}/index.js &
 
 # Run WEB
 cd ${WEB}
-echo ${WEB}
-echo "Run ${WEB}"
+echo "\nRun web"
 python3 -m http.server &
 
 # Wait activate interface server
 sleep 1
 
 # Run memory CLIENT
-echo "Run ${CLIENT}"
+echo "\nRun memory client"
 ${CLIENT}/TarkovInjector ${RELAY_ADDR} ${PASSWORD} -s

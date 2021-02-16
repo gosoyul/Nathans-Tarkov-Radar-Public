@@ -25,7 +25,7 @@ public:
             //result.push_back(CurrentChar);
         //}
 
-        char buff[100];
+        char buff[150];
         GameProcess->Read(GameObjectNameAddr, &buff[0], sizeof(buff));
 
         std::string Name(buff);

@@ -19,7 +19,7 @@ public:
     std::string GetString()
     {
         int32_t StringSize = GetStringSize();
-        std::string result(StringSize, ' ');
+        std::string result(StringSize * sizeof(short), ' ');
 
         GameProcess->Read(Address + 0x14, result.data(), StringSize * sizeof(short));
 

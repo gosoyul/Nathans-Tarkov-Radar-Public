@@ -22,6 +22,7 @@ public:
 
     bool operator==(const TrackedMember &other)
     {
+        //return strcmp(Member.ID, other.Member.ID);
         return other.Member.ID == Member.ID;
     }
 };
@@ -84,6 +85,7 @@ public:
             int index = it - SentPlayers.begin();
             Socket->emit("updateplayer", TarkovMessageBuilder::UpdatePlayerMessage(Player));
             SentPlayers[index].i = i;
+//printf("Update player : %d\n", i);
         }
         else
         {
@@ -91,6 +93,7 @@ public:
             TrackedMember<TarkovPlayer> NewMember(Player);
             NewMember.i = i;
             SentPlayers.push_back(NewMember);
+//printf("NEWPLAYER : %d\n", i);
         }
     }
 
@@ -133,6 +136,7 @@ public:
             TrackedMember<TarkovLootItem> NewLoot(Loot);
             NewLoot.i = i;
             SentLoot.push_back(NewLoot);
+//printf("ADD LOOT : %s\n", Loot.ID.c_str());
         }
     }
 
@@ -144,8 +148,10 @@ public:
         std::list<TrackedMember<TarkovLootItem>> OldLoot;
         for (const TrackedMember<TarkovLootItem>& Loot : SentLoot)
         {
-            if (Loot.i < i)
+            if (Loot.i < i) {
                 OldLoot.push_back(Loot);
+                //printf("%d", i);
+            }
         }
 
         for (const TrackedMember<TarkovLootItem>& Loot : OldLoot)
@@ -153,8 +159,10 @@ public:
             auto it = std::find(SentLoot.begin(), SentLoot.end(), Loot.Member);
             Socket->emit("deleteloot", TarkovMessageBuilder::DeleteLootMessage(Loot.Member));
 
-            if (it != SentLoot.end())
+            if (it != SentLoot.end())//{
                 SentLoot.erase(it);
+//printf("%d", i);
+//}
         }
     }
 

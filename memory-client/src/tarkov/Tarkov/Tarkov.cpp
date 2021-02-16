@@ -59,12 +59,14 @@ void TarkovGame::GameMain()
             RelayManager->DeleteOldLoot(i);
 
             // Exfil Handling
+/*
             std::vector<TarkovExfilPoint> AllExfils = GetExfilArray();
 
             for (const TarkovExfilPoint& Exfil : AllExfils)
             {
                 RelayManager->UpdateExfil(Exfil, i);
             }
+*/
         }
     }
 }
@@ -120,7 +122,10 @@ std::vector<TarkovLootItem> TarkovGame::GetAllLoot()
 
     for (const uint64_t& LootPtr : LootListPtr)
     {
-        LootList.push_back(TarkovLootItem(GameProcess, LootPtr));
+        TarkovLootItem tarkovLootItem = TarkovLootItem(GameProcess, LootPtr);
+        if(tarkovLootItem.isHighValue)
+            LootList.push_back(tarkovLootItem);
+        //LootList.push_back(TarkovLootItem(GameProcess, LootPtr));
     }
 
     /*

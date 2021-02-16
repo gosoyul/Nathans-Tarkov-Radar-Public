@@ -118,7 +118,8 @@ angular.module("tarkovradar").controller("main", ['$scope', function ($scope) {
                 $scope.data.loot.push(data);
             });
 
-            socket.on('removeloot', function (data) {
+            socket.on('deleteloot', function (data) {
+console.log(data);
                 for (item in $scope.data.loot) {
                     if ($scope.data.loot[item].signature == data.signature) {
                         $scope.loot.splice(item, 1);
