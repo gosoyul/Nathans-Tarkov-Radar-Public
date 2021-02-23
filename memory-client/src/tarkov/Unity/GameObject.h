@@ -12,26 +12,26 @@ public:
 
     std::string GetGameObjectName()
     {
-        //std::string result;
+        std::string result;
         uint64_t GameObjectNameAddr = GameProcess->Read<uint64_t>(Address + 0x60);
 
-        //for (int i = 0; i <= 100; i++)
-        //{
-            //char CurrentChar = GameProcess->Read<char>(GameObjectNameAddr + i);
+        for (int i = 0; i <= 100; i++)
+        {
+            char CurrentChar = GameProcess->Read<char>(GameObjectNameAddr + i);
 
-            //if (CurrentChar == '\0')
-                //break;
+            if (CurrentChar == '\0')
+                break;
 
-            //result.push_back(CurrentChar);
-        //}
+            result.push_back(CurrentChar);
+        }
 
-        char buff[150];
-        GameProcess->Read(GameObjectNameAddr, &buff[0], sizeof(buff));
+        // char buff[120];
+        // GameProcess->Read(GameObjectNameAddr, &buff[0], sizeof(buff));
 
-        std::string Name(buff);
-        Name.erase(std::find(Name.begin(), Name.end(), '\0'), Name.end());
+        // std::string Name(buff);
+        // Name.erase(std::find(Name.begin(), Name.end(), '\0'), Name.end());
 
-        return Name;
+        return result;
     }
 
     uint64_t GetGameComponent()

@@ -5,6 +5,8 @@
 #include "TarkovPlayerBody.h"
 #include "TarkovHandsController.h"
 
+#include "rapidjson/document.h"
+
 class TarkovPlayer : public MemoryObject
 {
 public:
@@ -15,7 +17,7 @@ public:
     {
     }
 
-    TarkovPlayer(WinProcess *GameProcess, uint64_t Address)
+    TarkovPlayer(WinProcess *GameProcess, uint64_t Address, rapidjson::Value &playerConfig)
         : MemoryObject(GameProcess, Address)
     {
         ID = GetPlayerProfile().GetPlayerID().GetString();

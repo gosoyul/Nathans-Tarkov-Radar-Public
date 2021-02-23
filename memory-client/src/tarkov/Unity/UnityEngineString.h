@@ -1,5 +1,6 @@
 #pragma once
 #include "Base.h"
+#include <regex>
 
 class UnityEngineString : public MemoryObject
 {
@@ -19,18 +20,22 @@ public:
     std::string GetString()
     {
         int32_t StringSize = GetStringSize();
-        std::string result(StringSize * sizeof(short), ' ');
+        // std::string result(StringSize * sizeof(short), ' ');
+        std::string result;
 
-        GameProcess->Read(Address + 0x14, result.data(), StringSize * sizeof(short));
-
-        /*
-        for (int i = 0; i < StringSize; i++)
-        {
-            char CurrentChar = GameProcess->Read<char>(Address + 0x14 + (i * 2));
-            result.push_back(CurrentChar);
+        if(StringSize > 500) {
+            result = "fail";
+        } else {
+            // GameProcess->Read(Address + 0x14, result.data(), StringSize * sizeof(short));
+            for (int i = 0; i < StringSize; i++)
+            {
+                char CurrentChar = GameProcess->Read<char>(Address + 0x14 + (i * 2));
+                result.push_back(CurrentChar);
+            }
         }
-        */
-
+       
         return result;
     }
 };
+
+

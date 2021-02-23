@@ -9,6 +9,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "rapidjson/document.h"
+#include "rapidjson/istreamwrapper.h"
+#include <fstream>
+
 void TarkovGame::GameMain()
 {
     while (true)
@@ -30,43 +34,69 @@ void TarkovGame::GameMain()
 
         RelayManager->UpdateGameReady(gameReady());
 
+        rapidjson::Document itemList;
+        rapidjson::Document config;
+        // Read the list of items to be displayed
+        if(gameReady()) {
+            std::ifstream configStream("./config.json");
+            if(configStream.is_open()) {
+                rapidjson::IStreamWrapper configStreamWrapper(configStream);
+                
+                config.ParseStream(configStreamWrapper);
+                configStream.close();
+            } else {
+                throw std::runtime_error("!! Unable to open config.json !!");
+            }
+
+            std::ifstream itemListStream("./itemList.json");
+            if(itemListStream.is_open()) {
+                rapidjson::IStreamWrapper itemListStreamWrapper(itemListStream);
+                
+                itemList.ParseStream(itemListStreamWrapper);
+                itemListStream.close();
+            } else {
+                throw std::runtime_error("!! Unable to open itemList.json !!");
+            }
+        }
+
         int i = 0;
         while (gameReady())
         {
             usleep(100000);
             ++i;
-
             // Player Handling
-            std::vector<TarkovPlayer> AllPlayers = GetAllPlayers();
-
-            // Update existing player
-            for (const TarkovPlayer& Player : AllPlayers)
-            {
-                //Player.DebugDump();
-                RelayManager->UpdatePlayer(Player, i);
+            if(config["player"]["on"].IsBool() && config["player"]["on"].GetBool()) {
+                std::vector<TarkovPlayer> AllPlayers = GetAllPlayers(config["player"]);
+                // Update existing player
+                for (const TarkovPlayer& Player : AllPlayers)
+                {
+                    //Player.DebugDump();
+                    RelayManager->UpdatePlayer(Player, i);
+                }
+                
+                RelayManager->DeleteOldPlayers(i);
             }
-
-            RelayManager->DeleteOldPlayers(i);
 
             // Loot Handling
-            std::vector<TarkovLootItem> AllLoot = GetAllLoot();
+            if(config["loot"]["on"].IsBool() && config["loot"]["on"].GetBool()) {
+                std::vector<TarkovLootItem> AllLoot = GetAllLoot(config["loot"], itemList);
 
-            for (const TarkovLootItem& Loot : AllLoot)
-            {
-                RelayManager->UpdateLoot(Loot, i);
+                for (const TarkovLootItem& Loot : AllLoot)
+                {
+                    RelayManager->UpdateLoot(Loot, i);
+                }
+                RelayManager->DeleteOldLoot(i);
             }
-
-            RelayManager->DeleteOldLoot(i);
-
+            
             // Exfil Handling
-/*
-            std::vector<TarkovExfilPoint> AllExfils = GetExfilArray();
+            if(config["exfil"]["on"].IsBool() && config["exfil"]["on"].GetBool()) {
+                std::vector<TarkovExfilPoint> AllExfils = GetExfilArray();
 
-            for (const TarkovExfilPoint& Exfil : AllExfils)
-            {
-                RelayManager->UpdateExfil(Exfil, i);
+                for (const TarkovExfilPoint& Exfil : AllExfils)
+                {
+                    RelayManager->UpdateExfil(Exfil, i);
+                }
             }
-*/
         }
     }
 }
@@ -78,7 +108,7 @@ int32_t TarkovGame::GetPlayerCount()
     return GameProcess->Read<int32_t>(m_pPlayerList + 0x18);
 }
 
-std::vector<TarkovPlayer> TarkovGame::GetAllPlayers()
+std::vector<TarkovPlayer> TarkovGame::GetAllPlayers(rapidjson::Value &playerConfig)
 {
     std::vector<TarkovPlayer> PlayerList;
 
@@ -93,7 +123,7 @@ std::vector<TarkovPlayer> TarkovGame::GetAllPlayers()
 
     for (const uint64_t& PlayerPtr : PlayerListPtr)
     {
-        PlayerList.push_back(TarkovPlayer(GameProcess, PlayerPtr));
+        PlayerList.push_back(TarkovPlayer(GameProcess, PlayerPtr, playerConfig));
     }
 
     /*
@@ -107,7 +137,7 @@ std::vector<TarkovPlayer> TarkovGame::GetAllPlayers()
     return PlayerList;
 }
 
-std::vector<TarkovLootItem> TarkovGame::GetAllLoot()
+std::vector<TarkovLootItem> TarkovGame::GetAllLoot(rapidjson::Value &lootConfig, rapidjson::Document &itemList)
 {
     std::vector<TarkovLootItem> LootList;
 
@@ -119,26 +149,24 @@ std::vector<TarkovLootItem> TarkovGame::GetAllLoot()
     uint64_t m_lLootListObject = GameProcess->Read<uint64_t>(m_lLootList + 0x10);
 
     GameProcess->Read(m_lLootListObject + 0x20, LootListPtr.data(), m_lLootListSize * sizeof(uint64_t));
-
     for (const uint64_t& LootPtr : LootListPtr)
     {
-        TarkovLootItem tarkovLootItem = TarkovLootItem(GameProcess, LootPtr);
-        if(tarkovLootItem.isHighValue)
+        TarkovLootItem tarkovLootItem = TarkovLootItem(GameProcess, LootPtr, lootConfig, itemList);
+        
+        if(tarkovLootItem.isShown)
             LootList.push_back(tarkovLootItem);
-        //LootList.push_back(TarkovLootItem(GameProcess, LootPtr));
     }
 
-    /*
-    for (int i = 0; i < m_lLootListSize; i++)
-    {
-        TarkovLootItem m_lItem = TarkovLootItem(GameProcess, GameProcess->Read<uint64_t>(m_lLootListObject + 0x20 + (i * 0x8)));
-        Vector3 coord = m_lItem.LootLocation;
-        if (coord.x == 0 && coord.y == 0 && coord.z == 0)
-            continue;
+    // for (int i = 0; i < m_lLootListSize; i++)
+    // {
+    //     TarkovLootItem m_lItem = TarkovLootItem(GameProcess, GameProcess->Read<uint64_t>(m_lLootListObject + 0x20 + (i * 0x8)));
+    //     Vector3 coord = m_lItem.LootLocation;
+    //     if (coord.x == 0 && coord.y == 0 && coord.z == 0)
+    //         continue;
 
-        LootList.push_back(m_lItem);
-    }
-    */
+    //     if(m_lItem.isShown)
+    //         LootList.push_back(m_lItem);
+    // }
 
     return LootList;
 }

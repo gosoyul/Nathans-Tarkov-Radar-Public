@@ -2,6 +2,13 @@ const SPRITE_RADIUS = 8;
 const SPRITE_DIAMETER = SPRITE_RADIUS * 2;
 const char_radius = 14;
 
+const globalConfig = {
+    'isShowItemName': true,
+    'isShowGuidelineValuable': true,
+    'isShowPlayerDirection': true,
+    'isShowScavLocateInfo': true
+}
+
 var colours = [
     ['#4d4dff', 'triup'],
     ['#4d4dff', 'tridown'],
@@ -41,7 +48,7 @@ var canvas, ctx, RADAR_RADIUS, RADAR_SCALE;
 var canvassprite, ctxsprite;
 var canvasoverlay, ctxoverlay;
 
-var focusedplayer;
+// var focusedplayer;
 var FOCUS_PLAYER, TEAMS, LOOTFILTER, FOCUSONLY, HIDECORPSES;
 
 var ENEMYTEAMSRUNTIME = [];
@@ -242,6 +249,8 @@ function render(data) {
     const loot = data.loot;
     const exfils = data.exfils;
 
+    let focusedplayer;
+
     /* clear full canvas */
     ctx.clearRect(0, 0, RADAR_RADIUS * 2, RADAR_RADIUS * 2);
 
@@ -258,23 +267,23 @@ function render(data) {
     }
 
     /* if no player is focused select the first one in array */
-    if (focusedplayer == undefined) {
+    if (focusedplayer === undefined) {
         focusedplayer = players[0];
     }
 
-    var HVLoot = false;
+    var isExistsValuable = false;
 
     ctx.beginPath()
-    for (let item of loot) {
-        let distance = wdistance(focusedplayer, item);
-        let screenpos = w2s(focusedplayer, item);
+    for (const item of loot) {
+        const distance = wdistance(focusedplayer, item);
+        const screenpos = w2s(focusedplayer, item);
 
-        let focus = (LOOTFILTER[item.signature] !== undefined ? LOOTFILTER[item.signature]["enable"] : false) || loot.highvalue;
+        const focus = (LOOTFILTER[item.signature] !== undefined ? LOOTFILTER[item.signature]["enable"] : false) || (item.highvalue && globalConfig.isShowGuidelineValuable);
         if (focus) { /* Render high value line */
             if (!item.corpse)
                 drawLine(ctx, [RADAR_RADIUS, RADAR_RADIUS], screenpos);
 
-            HVLoot = true;
+            isExistsValuable = true;
         }
         else if (FOCUSONLY) {
             continue;
@@ -283,30 +292,32 @@ function render(data) {
         if (HIDECORPSES && item.corpse)
             continue;
 
-        /* render */
+        // Do not display if the object is outside the radar range 
         if (distance * RADAR_SCALE > RADAR_RADIUS)
             continue;
 
-        /* render elevation, if scav is higher or lower show that by an up or downward triangle */
+        /* render elevation, if item is higher or lower show that by an up or downward triangle */
         if (Math.abs(focusedplayer.coordinates["y"] - item.coordinates["y"]) <= 2) /* check if altitude is equal with tolerance of 5 */
             drawSprite(ctx, screenpos, focus ? 8 : 5);
         else if (focusedplayer.coordinates["y"] > item.coordinates["y"])
             drawSprite(ctx, screenpos, focus ? 7 : 4);
         else
             drawSprite(ctx, screenpos, focus ? 6 : 3);
-
-        drawText(ctx, [screenpos[0], screenpos[1] - SPRITE_RADIUS * 2], item.name, focus ? "#380474" : "#2F4F4F");
+        
+        // Draw item name
+        if(globalConfig.isShowItemName)
+            drawText(ctx, [screenpos[0], screenpos[1] - SPRITE_RADIUS * 2], item.name, focus ? "#380474" : "#2F4F4F");
     }
     ctx.strokeStyle = "#380474";
     ctx.closePath();
     ctx.stroke()
 
-    let groupcount = 0;
+    let groupCount = 0;
 
     /*
     for (let group of groups) {
         // if focused player has a group add all the people to teamed to be drawn later
-        groupcount++;
+        groupCount++;
         if (focusedplayer == undefined) continue;
         if (group.id == focusedplayer.groupid) {
             for (let player of group.members) {
@@ -339,7 +350,8 @@ function render(data) {
     /* iterate over all players */
     ctx.beginPath()
     for (let player of players) {
-        if (player.id == FOCUS_PLAYER)
+        // if (player.id == FOCUS_PLAYER)
+        if (player.id == focusedplayer.id)
             continue;
 
         let distance = wdistance(focusedplayer, player);
@@ -353,13 +365,16 @@ function render(data) {
         else
             scavCount++;
 
-        /* render */
+        // Do not display if the object is outside the radar range 
         if (distance * RADAR_SCALE > RADAR_RADIUS)
             continue;
 
+        
+        if(globalConfig.isShowPlayerDirection)
         {
             let facingpos = RotatePoint([screenpos[0], screenpos[1] + SPRITE_RADIUS * 5], screenpos, -((player.viewangle["x"] - focusedplayer.viewangle["x"] - 180) * -1));
-            if (player.id != FOCUS_PLAYER)
+            // if (player.id != FOCUS_PLAYER)
+            if (player.id != focusedplayer.id)
                 drawLine(ctx, screenpos, facingpos)
         }
 
@@ -370,10 +385,11 @@ function render(data) {
         else
             drawSprite(ctx, screenpos, team ? 6 : player.isscav ? 0 : 10);
 
-        drawText(ctx, [screenpos[0], screenpos[1] - SPRITE_RADIUS * 4], player.name + " : " + player.membertype + " (" + parseFloat(Math.abs(focusedplayer.coordinates["y"] - player.coordinates["y"])).toFixed(2) + ") (" + distance + "m)", team ? "#380474" : player.isscav ? "#4d4dff" : "#3333ff");
+        if(!player.isscav || globalConfig.isShowScavLocateInfo)
+            drawText(ctx, [screenpos[0], screenpos[1] - SPRITE_RADIUS * 4], player.name + " : " + player.membertype + " (" + parseFloat(Math.abs(focusedplayer.coordinates["y"] - player.coordinates["y"])).toFixed(2) + ") (" + distance + "m)", team ? "#380474" : player.isscav ? "#4d4dff" : "#3333ff");
         
         // We could draw the player weapon but it got a bit cluttered
-        //drawText(ctx, [screenpos[0], screenpos[1] - SPRITE_RADIUS * 2], player.weapon, team ? "#380474" : player.isscav ? "#4d4dff" : "#3333ff", "center", char_radius - 2);
+        // drawText(ctx, [screenpos[0], screenpos[1] - SPRITE_RADIUS * 2], player.weapon, team ? "#380474" : player.isscav ? "#4d4dff" : "#3333ff", "center", char_radius - 2);
     }
     ctx.strokeStyle = "white";
     ctx.closePath();
@@ -381,6 +397,10 @@ function render(data) {
 
     /* iterate over all exfils */
     for (let exfil of exfils) {
+        // DEBUG
+        if(exfil.status !== 4)
+            continue;
+
         let distance = wdistance(focusedplayer, exfil);
         let screenpos = w2s(focusedplayer, exfil);
 
@@ -394,12 +414,13 @@ function render(data) {
     }
 
     /* Render some basic info */
+    // drawText(ctx, [50, 120], "FPS: " + LASTFPS + " - Token: " + data.token, "#380474", "left", 15);
     drawText(ctx, [50, 100], "x" + RADAR_SCALE, "#380474", "left", 15);
     drawText(ctx, [50, 80], "SCAVs Alive: " + scavCount, "#380474", "left", 15);
-    drawText(ctx, [50, 60], "Enemies Alive: " + enemyCount + " Groups: " + groupcount, "#380474", "left", 15);
+    drawText(ctx, [50, 60], "Enemies Alive: " + enemyCount + " Groups: " + groupCount, "#380474", "left", 15);
     drawText(ctx, [50, 40], "FPS: " + LASTFPS + " - Token: " + data.token, "#380474", "left", 15);
-    if (HVLoot)
-        drawText(ctx, [50, 20], "HV loot detected!", "#380474", "left", 15);
+    if (isExistsValuable)
+        drawText(ctx, [50, 20], "Valuable loot detected!", "#380474", "left", 15);
 
     if (!data.host)
         drawText(ctx, [RADAR_RADIUS, RADAR_RADIUS], "HOST OFFLINE", "#380474", "center", 50);

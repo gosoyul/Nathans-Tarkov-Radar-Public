@@ -13,7 +13,6 @@ public:
     static sio::object_message::ptr NewPlayerMessage(TarkovPlayer Player)
     {
         std::map<std::string, sio::message::ptr> PlayerJson;
-
         Vector3 Location = Player.GetPlayerBody().GetSkeletonRoot().GetCoordsFromMatrixTest();
         sio::object_message::ptr PlayerLocation = sio::object_message::create();
         std::map<std::string, sio::message::ptr> &PlayerLocationMap = PlayerLocation->get_map();
@@ -39,7 +38,7 @@ public:
         PlayerJson["isplayerscav"] = sio::bool_message::create(Player.IsPlayerScav());
         PlayerJson["groupid"] = sio::string_message::create(Info.GroupID);
         PlayerJson["membertype"] = sio::int_message::create(Info.AccountType);
-        PlayerJson["weapon"] = sio::string_message::create(Player.GetPlayerHandsController().GetActiveWeaponName().GetString());
+        // PlayerJson["weapon"] = sio::string_message::create(Player.GetPlayerHandsController().GetActiveWeaponName().GetString());
 
         sio::object_message::ptr Message = sio::object_message::create();
         Message->get_map() = PlayerJson;
@@ -70,7 +69,7 @@ public:
         PlayerJson["id"] = sio::string_message::create(Info.PlayerName + Profile.GetPlayerID().GetString());
         PlayerJson["coordinates"] = PlayerLocation;
         PlayerJson["viewangle"] = PlayerView;
-        PlayerJson["weapon"] = sio::string_message::create(Player.GetPlayerHandsController().GetActiveWeaponName().GetString());
+        // PlayerJson["weapon"] = sio::string_message::create(Player.GetPlayerHandsController().GetActiveWeaponName().GetString());
 
         sio::object_message::ptr Message = sio::object_message::create();
         Message->get_map() = PlayerJson;
@@ -108,7 +107,7 @@ public:
         LootJson["coordinates"] = LootLocation;
         LootJson["corpse"] = sio::bool_message::create(Loot.isCorpse);
         LootJson["signature"] = sio::string_message::create(Loot.ID);
-        LootJson["highvalue"] = sio::bool_message::create(Loot.IsHighValue());
+        LootJson["highvalue"] = sio::bool_message::create(Loot.isValuable);
 
         sio::object_message::ptr Message = sio::object_message::create();
         Message->get_map() = LootJson;
@@ -133,8 +132,8 @@ public:
         std::map<std::string, sio::message::ptr> ExfilJson;
 
         Vector3 Location = Exfil.GetCoordsFromMatrixTest();
-        sio::object_message::ptr LootLocation = sio::object_message::create();
-        std::map<std::string, sio::message::ptr> &ExfilLocationMap = LootLocation->get_map();
+        sio::object_message::ptr ExfilLocation = sio::object_message::create();
+        std::map<std::string, sio::message::ptr> &ExfilLocationMap = ExfilLocation->get_map();
         ExfilLocationMap["x"] = sio::int_message::create(Location.x);
         ExfilLocationMap["y"] = sio::int_message::create(Location.y);
         ExfilLocationMap["z"] = sio::int_message::create(Location.z);
@@ -144,7 +143,7 @@ public:
         ExfilJson["status"] = sio::int_message::create(Exfil.GetOpenStatus());
         ExfilJson["openms"] = sio::int_message::create(Exfil.GetExitStartTime());
         ExfilJson["chance"] = sio::int_message::create(Exfil.GetChance());
-        ExfilJson["coordinates"] = LootLocation;
+        ExfilJson["coordinates"] = ExfilLocation;
 
         sio::object_message::ptr Message = sio::object_message::create();
         Message->get_map() = ExfilJson;

@@ -18,7 +18,8 @@ pkill -9 'TarkovInjector'
 
 # Run RELAY server
 echo "Run relay server"
-node ${RELAY}/index.js &
+cd ${RELAY}
+node ./index.js &
 
 # Run WEB
 cd ${WEB}
@@ -30,4 +31,5 @@ sleep 1
 
 # Run memory CLIENT
 echo "\nRun memory client"
-${CLIENT}/TarkovInjector ${RELAY_ADDR} ${PASSWORD} -s
+cd ${CLIENT}
+./TarkovInjector ${RELAY_ADDR} ${PASSWORD} -s

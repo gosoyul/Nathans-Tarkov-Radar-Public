@@ -85,7 +85,6 @@ public:
             int index = it - SentPlayers.begin();
             Socket->emit("updateplayer", TarkovMessageBuilder::UpdatePlayerMessage(Player));
             SentPlayers[index].i = i;
-//printf("Update player : %d\n", i);
         }
         else
         {
@@ -93,7 +92,6 @@ public:
             TrackedMember<TarkovPlayer> NewMember(Player);
             NewMember.i = i;
             SentPlayers.push_back(NewMember);
-//printf("NEWPLAYER : %d\n", i);
         }
     }
 

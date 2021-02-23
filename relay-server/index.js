@@ -219,6 +219,7 @@ io.on('connection', socket => {
       let removeIndex = -1;
 
       for (item in session["loot"]) {
+
         if (session["loot"][item].signature == validatedData.signature) {
         //if (session["loot"][item].signature == data.signature) {
           removeIndex = item;
@@ -310,7 +311,7 @@ function TickVolatileData() {
   let sockets = io.sockets.sockets; // All Sockets
 
   let datatransmit = session;
-  datatransmit["loot"] = [];
+  // datatransmit["loot"] = [];
 
   var isocket = 0;
   for (isocket of sockets) {

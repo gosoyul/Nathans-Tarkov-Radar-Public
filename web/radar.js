@@ -1,7 +1,7 @@
 angular.module("tarkovradar").controller("main", ['$scope', function ($scope) {
     let oldurl = 'http://' + window.location.hostname + ':8080'
 
-    let canvas = $("#radarCanvas")[0];
+    let canvas = document.querySelector("#radarCanvas");
     let ctx = canvas.getContext("bitmaprenderer");
 
     $scope.RADAR_RADIUS = window.innerHeight > window.innerWidth ? window.innerWidth / 2 : window.innerHeight / 2;
@@ -18,7 +18,9 @@ angular.module("tarkovradar").controller("main", ['$scope', function ($scope) {
     const dummydata = { "host": false, "start": false, "players": [], "loot": [], "exfils": [], "groups": [], "token": "NOT-AUTHENTICATED" };
     $scope.data = dummydata;
 
-    let render_worker = new Worker('render_worker.js');
+    const randomNumber = new Uint32Array(1);
+    window.crypto.getRandomValues(randomNumber);
+    let render_worker = new Worker('render_worker.js?cache=' + randomNumber);
 
     let htmlBuffer = document.createElement('canvas', { alpha: false });
     let offscreenBuffer = htmlBuffer.transferControlToOffscreen();
@@ -51,7 +53,8 @@ angular.module("tarkovradar").controller("main", ['$scope', function ($scope) {
             "groups": data.groups,
             "exfils": data.exfils,
             "token": data.token,
-            "loot": $scope.data.loot
+            //"loot": $scope.data.loot
+            "loot": data.loot
         }
 
         render_worker.postMessage({ "event": "render", "message": $scope.data, "behind": render_behind });
@@ -61,10 +64,14 @@ angular.module("tarkovradar").controller("main", ['$scope', function ($scope) {
     function connect() {
         if (shouldprompt) {
             shouldprompt = false;
-            let url = "";
-            while (url == "" || url == null)
-                url = prompt("Please enter the server host address", oldurl)
-            oldurl = url;
+
+            // let url = "";
+            // while (url == "" || url == null)
+            //     url = prompt("Please enter the server host address", oldurl)
+            // oldurl = url;
+            oldurl = prompt("Please enter the server host address", oldurl);
+            const url = oldurl;
+
             shouldprompt = true;
 
             var socket = io.connect(url, {
@@ -73,7 +80,8 @@ angular.module("tarkovradar").controller("main", ['$scope', function ($scope) {
             });
 
             socket.on('connect', function () {
-                var passcode = prompt("Please enter your passcode");
+                // var passcode = prompt("Please enter your passcode");
+                var passcode = "boop";
                 socket.emit('authenticate', { "Passcode": passcode, "isHost": false, "isClient": true }, (response) => {
                     if (response.success === true) {
                         console.log('User is authenticated');
@@ -98,7 +106,7 @@ angular.module("tarkovradar").controller("main", ['$scope', function ($scope) {
 
             socket.on('reconnect_failed', (error) => {
                 console.log(error)
-                connect()
+                // connect()
             });
 
             socket.on('disconnect', (reason) => {
@@ -119,10 +127,11 @@ angular.module("tarkovradar").controller("main", ['$scope', function ($scope) {
             });
 
             socket.on('deleteloot', function (data) {
-console.log(data);
-                for (item in $scope.data.loot) {
-                    if ($scope.data.loot[item].signature == data.signature) {
-                        $scope.loot.splice(item, 1);
+                const loot = $scope.data.loot;
+
+                for (item in loot) {
+                    if (loot[item].signature == data.signature) {
+                        loot.splice(item, 1);
                         break;
                     }
                 }
