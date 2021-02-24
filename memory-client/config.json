@@ -1,0 +1,16 @@
+{
+    "player": {
+        "on": true,
+        "facing": true
+    },
+    "loot": {
+        "on": true,
+        "onlyValuable": true,
+        "container": true,
+        "corpse": true,
+        "corpseValuable": true
+    },
+    "exfil": {
+        "on": false
+    }
+}

@@ -1,0 +1,506 @@
+[
+    {
+        "_name": "golden_star_balm",
+        "name": "Golden Star Balm",
+        "valuable": true,
+        "use": true
+    },
+    {
+        "_name": "Item_barter_medical_defibrillator",
+        "name": "Portable defibrillator",
+        "valuable": true,
+        "use": true
+    },
+    {
+        "_name": "salewa",
+        "name": "Salewa FIRST AID KIT",
+        "valuable": true,
+        "use": false
+    },
+    {
+        "_name": "item_meds_medkit_ifak",
+        "name": "IFAK personal tactical first aid kit",
+        "valuable": true,
+        "use": false
+    },
+    {
+        "_name": "item_container_weaponcase_THICC",
+        "name": "T H I C C Weapon case",
+        "use": true,
+        "valuable": true
+    },
+    {
+        "_name": "item_container_items_thicc",
+        "name": "T H I C C Items case",
+        "use": true,
+        "valuable": true
+    },
+    {
+        "_name": "weaponcase",
+        "name": "Weapon case",
+        "valuable": true,
+        "use": true
+    },
+    {
+        "_name": "item_container_ammo",
+        "name": "Ammo case",
+        "valuable": true,
+        "use": true
+    },
+    {
+        "_name": "item_container_meds",
+        "name": "Meds case",
+        "valuable": true,
+        "use": true
+    },
+    {
+        "_name": "item_container_smallitems",
+        "name": "Dogtag case",
+        "valuable": true,
+        "use": true
+    },
+    {
+        "_name": "item_container_money",
+        "name": "Money case",
+        "valuable": true,
+        "use": true
+    },
+    {
+        "_name": "item_container_grenadebox",
+        "name": "Grenade case",
+        "valuable": true,
+        "use": true
+    },
+    {
+        "_name": "item_container_trackcase",
+        "name": "Items case",
+        "valuable": true,
+        "use": true
+    },
+    {
+        "_name": "item_container_keybar",
+        "name": "Keytool",
+        "valuable": true,
+        "use": true
+    },
+    {
+        "_name": "item_info_docbag",
+        "name": "Documents case",
+        "valuable": true,
+        "use": true
+    },
+    {
+        "_name": "key_inter_aid",
+        "name": "ULTRA medical storage key",
+        "valuable": true,
+        "use": true
+    },
+    {
+        "_name": "keycard_",
+        "name": "Any keycard",
+        "valuable": true,
+        "use": true
+    },
+    {
+        "_name": "item_lab_sec_room",
+        "name": "Lab. Violet keycard",
+        "valuable": true,
+        "use": true
+    },
+    {
+        "_name": "item_lab_glass_office",
+        "name": "Lab. key. Manager office",
+        "valuable": true,
+        "use": true
+    },
+    {
+        "_name": "item_lab_test_weapon",
+        "name": "Lab. key. Testing area (weap.)",
+        "valuable": true,
+        "use": true
+    },
+    {
+        "_name": "item_lab_weap_store_room",
+        "name": "Lab. key. Arsenal storage room",
+        "valuable": true,
+        "use": true
+    },
+    {
+        "_name": "rezbase_key_",
+        "name": "Any RB key",
+        "valuable": true,
+        "use": true
+    },
+    {
+        "_name": "Key_cash_machine_GOSHAN",
+        "name": "Key to Goshan cash register",
+        "valuable": true,
+        "use": true
+    },
+    {
+        "_name": "bigmap_key_usec1",
+        "name": "USEC stash on Customs key",
+        "valuable": true,
+        "use": true
+    },
+    {
+        "_name": "Key_Shopping_Mall_office_2",
+        "name": "Key to OLI logistics department office",
+        "valuable": true,
+        "use": true
+    },
+    {
+        "_name": "scope_all_flir_rs32_225_9x_35_60hz",
+        "name": "FLIR RS-32 2.25-9x 35mm 60Hz thermal riflescope",
+        "valuable": true,
+        "use": true
+    },
+    {
+        "_name": "pistolgrip_ar15_tactical_dynamics_skeletonized_anodized",
+        "name": "Skeletonized AR-15 pistol grip",
+        "valuable": true,
+        "use": true
+    },
+    {
+        "_name": "Key_Shopping_Mall_mchs",
+        "name": "Key to EMERCOM medical unit",
+        "valuable": true,
+        "use": true
+    },
+    {
+        "_name": "key_shoreline_sanitar_room",
+        "name": "Key with tape",
+        "valuable": true,
+        "use": true
+    },
+    {
+        "_name": "Key_Shopping_Mall_KIBA",
+        "name": "Key to KIBA store outlet",
+        "valuable": true,
+        "use": true
+    },
+    {
+        "_name": "thermal_spi_t7",
+        "name": "T-7 Thermal Goggles with Night Vision Mounts",
+        "valuable": true,
+        "use": true
+    },
+    {
+        "_name": "scope_base_trijicon_reap-ir",
+        "name": "Trijicon REAP-IR thermal riflescope",
+        "valuable": true,
+        "use": true
+    },
+    {
+        "_name": "mount_m14_leapers_utg_4_point_locking_deluxe_scope_mount",
+        "name": "M14 UTG 4 point locking deluxe mount",
+        "valuable": true,
+        "use": true
+    },
+    {
+        "_name": "barrel_m9_127mm_m9a3_std_9x19",
+        "name": "Threaded barrel for M9A3 9x19",
+        "valuable": true,
+        "use": true
+    },
+    {
+        "_name": "mount_mp5sd_bt_tri_rail_ring",
+        "name": "B&T MP5 SD Tri Rail Ring Mount",
+        "valuable": true,
+        "use": true
+    },
+    {
+        "_name": "scope_all_eotech_exps3",
+        "name": "Eotech EXPS3 holographic sight",
+        "valuable": true,
+        "use": true
+    },
+    {
+        "_name": "mount_all_custom_top_rail_13",
+        "name": "Kiba Arms International SPRM mount for pump-action shotguns",
+        "valuable": true,
+        "use": true
+    },
+    {
+        "_name": "gas_block_ar15_jp_jpgs5b",
+        "name": "JP Enterprises Gas System-5b",
+        "valuable": true,
+        "use": true
+    },
+    {
+        "_name": "mount_ak_tactica_tula_10000",
+        "name": "Tactica Tula 10000 mount",
+        "valuable": true,
+        "use": true
+    },
+    {
+        "_name": "mount_all_iea_kh_f_34mm",
+        "name": "34mm one piece magmount made by I-E-A Mil Optics",
+        "valuable": true,
+        "use": true
+    },
+    {
+        "_name": "handguard_ak_ultimak_m1b_std_plastic",
+        "name": "UltiMAK M1-B handguard for AK",
+        "valuable": true,
+        "use": true
+    },
+    {
+        "_name": "bt_mp9_9x19",
+        "name": "B&T MP9 9x19 submachinegun",
+        "valuable": true,
+        "use": true
+    },
+    {
+        "_name": "other_30mmround",
+        "name": "OFZ 30x160mm shell",
+        "valuable": true,
+        "use": true
+    },
+    {
+        "_name": "red_rebel_axe",
+        "name": "Red Rebel Ice pick",
+        "valuable": true,
+        "use": true
+    },
+    {
+        "_name": "crash_axe",
+        "name": "Crash Axe",
+        "valuable": true,
+        "use": true
+    },
+    {
+        "_name": "fn_40gl_s",
+        "name": "FN GL40 Mk.2 grenade launcher",
+        "valuable": true,
+        "use": true
+    },
+    {
+        "_name": "electr_phaseantenna",
+        "name": "Phased array element",
+        "valuable": true,
+        "use": true
+    },
+    {
+        "_name": "flam_gasoline",
+        "name": "Metal fuel tank",
+        "valuable": true,
+        "use": true
+    },
+    {
+        "_name": "moonshine",
+        "name": "\"Fierce Hatchling\" moonshine",
+        "valuable": true,
+        "use": true
+    },
+    {
+        "_name": "virtexprocessor",
+        "name": "Virtex programmable processor",
+        "valuable": true,
+        "use": true
+    },
+    {
+        "_name": "transilluminator",
+        "name": "LEDX Skin Transilluminator",
+        "valuable": true,
+        "use": true
+    },
+    {
+        "_name": "intelligence",
+        "name": "Folder with intelligence",
+        "valuable": true,
+        "use": true
+    },
+    {
+        "_name": "tetriz",
+        "name": "Tetriz portable game",
+        "valuable": true,
+        "use": true
+    },
+    {
+        "_name": "rfidreader",
+        "name": "UHF RFID Reader",
+        "valuable": true,
+        "use": true
+    },
+    {
+        "_name": "bitcoin",
+        "name": "Physical bitcoin",
+        "valuable": true,
+        "use": true
+    },
+    {
+        "_name": "valuable_prokill",
+        "name": "Chain with Prokill medallion",
+        "valuable": true,
+        "use": true
+    },
+    {
+        "_name": "rolex",
+        "name": "Roler submariner gold wrist watch",
+        "valuable": true,
+        "use": true
+    },
+    {
+        "_name": "video_card",
+        "name": "Graphics card",
+        "valuable": true,
+        "use": true
+    },
+    {
+        "_name": "flashstorage",
+        "name": "VPX Flash Storage Module",
+        "valuable": true,
+        "use": true
+    },
+    {
+        "_name": "other_paracord",
+        "name": "Paracord",
+        "valuable": true,
+        "use": true
+    },
+    {
+        "_name": "wirelesstranmitter",
+        "name": "Military COFDM wireless Signal Transmitter",
+        "valuable": true,
+        "use": true
+    },
+    {
+        "_name": "medical_diagset",
+        "name": "Ophthalmoscope",
+        "valuable": true,
+        "use": true
+    },
+    {
+        "_name": "energy_powerbank",
+        "name": "Powerbank",
+        "valuable": true,
+        "use": true
+    },
+    {
+        "_name": "valuable_skullring",
+        "name": "Gold skull ring",
+        "valuable": true,
+        "use": true
+    },
+    {
+        "_name": "item_food_sugar",
+        "name": "Pack of sugar",
+        "valuable": true,
+        "use": true
+    },
+    {
+        "_name": "alyonka",
+        "name": "Alyonka chocolate bar",
+        "valuable": true,
+        "use": true
+    },
+    {
+        "_name": "drink_aquamari",
+        "name": "Water bottle with a filter Aquamari",
+        "valuable": false,
+        "use": true
+    },
+    {
+        "_name": "ration",
+        "name": "Iskra lunch box",
+        "valuable": false,
+        "use": true
+    },
+    {
+        "_name": "item_flash_card_ironkey",
+        "name": "Secure Flash drive",
+        "valuable": false,
+        "use": true
+    },
+    {
+        "_name": "item_ammo_box_545x39_30_BS",
+        "name": "30 pcs. 5.45x39 BS gs ammo pack",
+        "valuable": false,
+        "use": true
+    },
+    {
+        "_name": "item_ammo_box_545x39_7N39_30",
+        "name": "30 pcs. 5.45x39 7N39 ammo pack",
+        "valuable": false,
+        "use": true
+    },
+    {
+        "_name": "patron_556x45_M855A1",
+        "name": "5.56x45 mm M855A1",
+        "valuable": false,
+        "use": true
+    },
+    {
+        "_name": "patron_556x45_M995",
+        "name": "5.56x45 mm M995",
+        "valuable": false,
+        "use": true
+    },
+    {
+        "_name": "patron_762x39_BP",
+        "name": "7.62x39 mm BP",
+        "valuable": false,
+        "use": true
+    },
+    {
+        "_name": "patron_762x54r_7n37",
+        "name": "7.62x54R 7N37",
+        "valuable": false,
+        "use": true
+    },
+    {
+        "_name": "item_equipment_armor_custom_hexgrid",
+        "name": "5.11 Hexgrid plate carrier",
+        "use": true,
+        "valuable": true
+    },
+    {
+        "_name": "item_equipment_armor_slick",
+        "name": "LBT 6094A Slick Plate Carrier",
+        "use": true,
+        "valuable": true
+    },
+    {
+        "_name": "canned_beef",
+        "name": "Can of beef stew",
+        "use": true,
+        "valuable": false
+    },
+    {
+        "_name": "car_battery",
+        "name": "Car battery",
+        "use": true,
+        "valuable": false
+    },
+    {
+        "_name": "item_barter_electr_sparkplug",
+        "name": "Spark plug",
+        "use": true,
+        "valuable": false
+    },
+    {
+        "_name": "cooler_fan",
+        "name": "CPU Fan",
+        "use": true,
+        "valuable": false
+    },
+    {
+        "_name": "CPU",
+        "name": "PC CPU",
+        "use": true,
+        "valuable": false
+    },
+    {
+        "_name": "item_energy_accum",
+        "name": "Rechargeable battery",
+        "use": true,
+        "valuable": false
+    },
+    {
+        "_name": "item_barter_electr_modem",
+        "name": "Printed circuit board",
+        "use": true,
+        "valuable": false
+    }
+]
